@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ruh"
+version = "0.1.0"
+description = "Parallel computation runtime for free-threaded Python"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Fauzan"}]
+requires-python = ">=3.8"
