@@ -1,7 +1,36 @@
+from typing import Callable
 from typing import TypeVar
-from typing import Tuple
+
+from concurrent.futures import ThreadPoolExecutor
 
 T = TypeVar("T")
+
+class Executor:
+
+    MAX_WORKERS: int = 10
+
+    def __init__(
+        self,
+        iterable: SplitIterable,
+        func: Callable,
+        max_workers: int = MAX_WORKERS
+    ):
+        self._iterable = iterable
+        self._func = func
+        self._workers = ThreadPoolExecutor(max_workers = max_workers)
+
+
+    def run(self):
+        it = iter(self._iterable)
+        q = [it]
+        while q:
+            item = q.pop()
+            if item.remaining():
+                l, r = item.split()
+                q.append(l)
+                q.append(r)
+            else:
+                self._workers.submit(self._func, next(item))
 
 class SplitIterable[T]:
 
@@ -14,7 +43,6 @@ class SplitIterable[T]:
     @property
     def items(self) -> int:
         return self._items
-
 
 class _Iterator:
 
