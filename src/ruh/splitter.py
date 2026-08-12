@@ -8,7 +8,7 @@ class SplitIterable[T]:
         self._items = items
 
     def __iter__(self) -> None:
-        return _SplitIterator(self)
+        return _Iterator(self)
 
     @property
     def items(self) -> int:
@@ -19,7 +19,7 @@ class _Iterator:
     def __init__(
         self,
         iterable: SplitIterable,
-        start: int = 0
+        start: int = 0,
         end: int = None
     ):
         self._it = iterable
@@ -27,7 +27,7 @@ class _Iterator:
         self._end = len(self._it.items) if end is None else end
         self._index = start
 
-    def __iter__(self) -> _Iterator:
+    def __iter__(self) -> "_Iterator":
         return self
 
     def __next__(self):
