@@ -3,6 +3,12 @@ from typing import TypeVar
 T = TypeVar("T")
 
 
+class BaseIterable:
+
+    def __init__(self, items: list[T]):
+        self._items = items
+
+
 class BaseIterator:
     def __init__(
         self,
