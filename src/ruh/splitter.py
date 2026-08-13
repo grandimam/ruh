@@ -2,8 +2,8 @@ from typing import TypeVar
 
 T = TypeVar("T")
 
-class SplitIterable[T]:
 
+class SplitIterable[T]:
     def __init__(self, items: list[T]) -> None:
         self._items = items
 
@@ -14,14 +14,9 @@ class SplitIterable[T]:
     def items(self) -> int:
         return self._items
 
-class _Iterator:
 
-    def __init__(
-        self,
-        iterable: SplitIterable,
-        start: int = 0,
-        end: int = None
-    ):
+class _Iterator:
+    def __init__(self, iterable: SplitIterable, start: int = 0, end: int = None):
         self._it = iterable
         self._start = 0
         self._end = len(self._it.items) if end is None else end

@@ -1,12 +1,15 @@
 from typing import Callable
-from collection.abc import Sequence
+from collections.abc import Sequence
 
-from ruh.executor import Executor
-from ruh.iterator import SplitIterable
+from ruh.runtime import Executor
+from ruh.splitter import SplitIterable
 
-def map(func: Callable, items: Sequence):
+
+def mapper(func: Callable, items: Sequence):
     """
-    Apply transformation for items
+    Apply transformation for items. It should use the
+    Fork/Join to chunk the collections, perform the
+    transformation, and return the results.
 
     Args:
         func: transformation function to be applied
@@ -19,5 +22,6 @@ def map(func: Callable, items: Sequence):
 
         map(lambda x: x ** 2, items)
     """
-    executor = Executor(SplitIterable(items) func)
+    splitter = SplitIterable(items)
+    executor = Executor(splitter, func)
     executor.run()

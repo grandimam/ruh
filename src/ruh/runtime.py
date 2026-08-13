@@ -1,25 +1,24 @@
 from typing import Callable
-from typing import TypeVar
 
 from concurrent.futures import ThreadPoolExecutor
 
-class Executor:
+from ruh.splitter import SplitIterable
 
+
+class Executor:
     MAX_WORKERS: int = 10
 
-    def __init__(
-        self,
-        iterable: SplitIterable,
-        func: Callable,
-        max_workers: int = MAX_WORKERS
-    ):
-        self._iterable = iterable
-        self._func = func
-        self._workers = ThreadPoolExecutor(max_workers = max_workers)
+    def __init__(self, max_workers: int = MAX_WORKERS):
+        self._workers = ThreadPoolExecutor(max_workers=max_workers)
 
+    def __enter__(self):
+        pass
 
-    def run(self):
-        it = iter(self._iterable)
+    def __exit__(self):
+        pass
+
+    def run(self, itr: SplitIterable, func: Callable):
+        it = iter(itr)
         q = [it]
         while q:
             item = q.pop()
@@ -28,4 +27,4 @@ class Executor:
                 q.append(l)
                 q.append(r)
             else:
-                self._workers.submit(self._func, next(item))
+                self._workers.submit(func, next(item))
