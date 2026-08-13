@@ -9,7 +9,7 @@ description = "Parallel computation runtime for free-threaded Python"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [{name = "Fauzan"}]
-requires-python = ">=3.8"
+requires-python = ">=3.13"
 
 [dependency-groups]
 dev = [

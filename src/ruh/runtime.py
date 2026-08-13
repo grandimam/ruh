@@ -2,7 +2,7 @@ from typing import Callable
 
 from concurrent.futures import ThreadPoolExecutor
 
-from ruh.splitter import SplitIterable
+from ruh.iterators import SplitIterable
 
 
 class Executor:
